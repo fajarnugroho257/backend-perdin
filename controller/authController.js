@@ -64,7 +64,7 @@ exports.login = async (req, res) => {
       { user_id: user.user_id, nama: user.nama, role: user.role },
       process.env.JWT_SECRET,
       {
-        expiresIn: "30m",
+        expiresIn: "1h",
       }
     );
 
