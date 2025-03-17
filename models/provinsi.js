@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/db");
+const Data_pulau = require("./pulau");
 
 const Data_provinsi = sequelize.define(
   "data_provinsi",
@@ -20,5 +21,9 @@ const Data_provinsi = sequelize.define(
     timestamps: true,
   }
 );
-
+// relasi
+Data_provinsi.belongsTo(Data_pulau, {
+  foreignKey: "pulau_id",
+  targetKey: "pulau_id",
+});
 module.exports = Data_provinsi;

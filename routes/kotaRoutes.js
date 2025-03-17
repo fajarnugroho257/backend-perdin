@@ -16,7 +16,7 @@ router.put("/update/:id", validateKota, KotaController.updateKota);
 router.delete("/delete/:id", KotaController.deleteKota);
 // referensi data
 router.get("/pulau", PulauController.getAllPulau);
-router.get("/provinsi/:pulau_id", ProvinsiController.getAllProvinsi);
+router.get("/provinsi/:pulau_id", ProvinsiController.getAllProvinsiByPulau);
 
 // router.post("/login", AuthController.login);
 

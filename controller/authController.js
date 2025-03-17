@@ -10,7 +10,7 @@ exports.addNewUser = async (req, res) => {
     // cek user by username
     const userExists = await User.findOne({ where: { username } });
     if (userExists) {
-      return res.status(400).json({ message: "Username sudah tersedia" });
+      return res.json({ success: false, message: "Username sudah tersedia" });
     }
     const user_id = await newUserID();
     try {
@@ -21,20 +21,23 @@ exports.addNewUser = async (req, res) => {
         user_id,
         role,
       });
-      res
-        .status(201)
-        .json({ message: "User berhasil didaftarkan", user: newUser });
+      res.json({
+        success: true,
+        message: "User berhasil didaftarkan",
+        user: newUser,
+      });
     } catch (error) {
       if (error.name === "SequelizeUniqueConstraintError") {
         res.status(400).json({
+          success: false,
           message: error.errors.map((err) => err.message),
         });
       } else {
-        res.status(400).json({ message: "Error lain:", error });
+        res.status(400).json({ success: false, message: "Error lain:", error });
       }
     }
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ success: false, error: error.message });
   }
 };
 
@@ -53,7 +56,7 @@ exports.login = async (req, res) => {
     if (!isMatch) {
       return res
         .status(200)
-        .json({ success: false, message: "Password salah" });
+        .json({ success: false, message: "User tidak ditemukan" });
     }
 
     // Buat token JWT
@@ -70,6 +73,7 @@ exports.login = async (req, res) => {
       message: "Login berhasil",
       token,
       userRole: user.role,
+      user_nama: user.nama,
     });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });

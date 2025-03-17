@@ -4,6 +4,8 @@ const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const kotaRoute = require("./routes/kotaRoutes");
 const perdinRoute = require("./routes/perdinRoutes");
+const pulauRoutes = require("./routes/pulauRoutes");
+const provinsiRoutes = require("./routes/provinsiRoutes");
 require("dotenv").config();
 const cors = require("cors");
 
@@ -28,6 +30,8 @@ app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/kota", kotaRoute);
 app.use("/perdin", perdinRoute);
+app.use("/pulau", pulauRoutes);
+app.use("/provinsi", provinsiRoutes);
 
 app.listen(port, () => {
   console.log(`Server berjalan di http://localhost:${port}`);

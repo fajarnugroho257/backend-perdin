@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/db");
 const Data_kota = require("./kota");
+const Users = require("./users");
 
 const Perdin = sequelize.define(
   "perdin",
@@ -46,5 +47,10 @@ Perdin.belongsTo(Data_kota, {
   foreignKey: "perdin_tujuan",
   targetKey: "kota_id",
   as: "tujuan",
+});
+Perdin.belongsTo(Users, {
+  foreignKey: "user_id",
+  targetKey: "user_id",
+  as: "user",
 });
 module.exports = Perdin;

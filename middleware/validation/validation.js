@@ -22,6 +22,25 @@ exports.validateRegister = [
   },
 ];
 
+exports.validateUpdateUser = [
+  body("username")
+    .notEmpty()
+    .isLength({ min: 3 })
+    .withMessage("Nama minimal 3 karakter"),
+  body("nama").notEmpty().withMessage("Nama wajib diisi"),
+  body("role")
+    .notEmpty()
+    .isIn(["pegawai", "sdm"])
+    .withMessage("Role wajib diisi"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];
+
 // validasi data login
 exports.validateLogin = [
   body("username").notEmpty().withMessage("Username wajib diisi"),
@@ -43,6 +62,31 @@ exports.validateKota = [
   body("prov_id").notEmpty().withMessage("Provinsi wajib diisi"),
   body("pulau_id").notEmpty().withMessage("Pulau wajib diisi"),
   body("kota_st").isIn(["yes", "no"]).withMessage("Status wajib diisi"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];
+
+// validasi data kota
+exports.validatePulau = [
+  body("pulau_nama").notEmpty().withMessage("Pulau wajib diisi"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];
+
+// validasi data provinsi
+exports.validateProvinsi = [
+  body("pulau_id").notEmpty().withMessage("Pulau wajib diisi"),
+  body("prov_nama").notEmpty().withMessage("Provinsi wajib diisi"),
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

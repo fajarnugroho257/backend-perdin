@@ -10,6 +10,7 @@ exports.getAllkota = async (req, res) => {
         { model: Data_provinsi, as: "data_provinsi", required: true },
         { model: Data_pulau, as: "data_pulau", required: true },
       ],
+      order: [["kota_nama", "ASC"]],
     });
     res.status(200).json({ success: true, data: allData, message: "suksess" });
   } catch (error) {

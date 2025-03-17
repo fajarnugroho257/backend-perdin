@@ -1,6 +1,7 @@
 const Data_kota = require("../models/kota");
 const Perdin = require("../models/perdin");
 const Pref = require("../models/pref");
+const Users = require("../models/users");
 
 exports.getAllData = async (req, res) => {
   try {
@@ -9,6 +10,10 @@ exports.getAllData = async (req, res) => {
       include: [
         { model: Data_kota, as: "asal", required: true },
         { model: Data_kota, as: "tujuan", required: true },
+      ],
+      order: [
+        ["createdAt", "DESC"],
+        ["perdin_start", "DESC"],
       ],
     });
     res.json({ success: true, data: allData });
@@ -23,7 +28,9 @@ exports.getAllDataPersetujuan = async (req, res) => {
       include: [
         { model: Data_kota, as: "asal", required: true },
         { model: Data_kota, as: "tujuan", required: true },
+        { model: Users, as: "user", required: true },
       ],
+      order: [["createdAt", "DESC"]],
     });
     res.json({ success: true, data: allData });
   } catch (error) {
@@ -141,6 +148,7 @@ exports.addNewPerdin = async (req, res) => {
 // store Perdin
 exports.updateDataPerdin = async (req, res) => {
   const { perdinID } = req.params;
+  // return res.json({ data: req.body });
   try {
     const detail = await Perdin.findOne({
       where: { perdin_id: perdinID },
